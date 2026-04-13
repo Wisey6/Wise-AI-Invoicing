@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+:root {
+  /* Wise AI Dark Cosmic Theme */
+  --wise-bg-primary: #0a0b14;
+  --wise-bg-secondary: #111227;
+  --wise-bg-tertiary: #1a1b3a;
+  --wise-border: #1e2044;
+  --wise-border-light: #2a2d5a;
+  --wise-text-primary: #ffffff;
+  --wise-text-secondary: #9ca3af;
+  --wise-text-muted: #6b7280;
+  --wise-accent-blue: #3b82f6;
+  --wise-accent-green: #10b981;
+  --wise-accent-amber: #f59e0b;
+  --wise-accent-red: #ef4444;
+
+  --background: var(--wise-bg-primary);
+  --foreground: var(--wise-text-primary);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Cosmic gradient background */
+.wise-bg-cosmic {
+  background: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      rgba(17, 18, 39, 0.8) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 20%,
+      rgba(59, 130, 246, 0.04) 0%,
+      transparent 50%
+    ),
+    var(--wise-bg-primary);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--wise-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--wise-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wise-border-light);
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    color: #111827 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  #invoice-preview {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Force white backgrounds for invoice in print */
+  #invoice-preview .bg-gradient-to-r {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #invoice-preview h1,
+  #invoice-preview h2 {
+    color: #111827 !important;
+  }
+}
+
+/* Date input styling for dark theme */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Number input - hide spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
