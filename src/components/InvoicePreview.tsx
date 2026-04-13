@@ -1,6 +1,7 @@
 "use client";
 
 import { InvoiceData } from "@/types/invoice";
+import { WiseLogo } from "@/components/WiseLogo";
 import {
   formatCurrency,
   formatDate,
@@ -11,6 +12,25 @@ import {
 
 interface InvoicePreviewProps {
   data: InvoiceData;
+}
+
+function StripeButton({ paymentLink }: { paymentLink: string }) {
+  return (
+    <a
+      href={paymentLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 bg-[#635bff] hover:bg-[#5851ea] text-white font-semibold text-sm px-6 py-3 rounded-lg transition-colors no-underline"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"
+          fill="white"
+        />
+      </svg>
+      Pay Now
+    </a>
+  );
 }
 
 export function InvoicePreview({ data }: InvoicePreviewProps) {
@@ -27,57 +47,13 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
       <div className="bg-gradient-to-r from-[#0a0b14] to-[#111227] px-8 py-8 print:bg-white print:py-6">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            {/* Logo for screen */}
+            {/* Owl logo for screen */}
             <div className="print:hidden">
-              <svg
-                width="36"
-                height="36"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  width="40"
-                  height="40"
-                  rx="8"
-                  fill="#3b82f6"
-                  fillOpacity="0.15"
-                />
-                <path
-                  d="M10 26L15 14L20 22L25 14L30 26"
-                  stroke="white"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="20" cy="12" r="2" fill="#3b82f6" />
-              </svg>
+              <WiseLogo size={44} color="white" />
             </div>
-            {/* Logo for print */}
+            {/* Owl logo for print */}
             <div className="hidden print:block">
-              <svg
-                width="36"
-                height="36"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  width="40"
-                  height="40"
-                  rx="8"
-                  fill="#3b82f6"
-                  fillOpacity="0.1"
-                />
-                <path
-                  d="M10 26L15 14L20 22L25 14L30 26"
-                  stroke="#0a0b14"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="20" cy="12" r="2" fill="#3b82f6" />
-              </svg>
+              <WiseLogo size={44} color="#0a0b14" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-white print:text-[#111827]">
@@ -195,7 +171,7 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
               return (
                 <tr key={item.id} className="border-b border-[#e5e7eb]">
                   <td className="py-3 text-sm text-[#111827]">
-                    {item.description || "—"}
+                    {item.description || "\u2014"}
                   </td>
                   <td className="py-3 text-sm text-[#111827] text-right font-mono">
                     {item.quantity}
@@ -241,6 +217,21 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
         </div>
       </div>
 
+      {/* Stripe Payment Button */}
+      {data.stripePaymentLink && (
+        <div className="px-8 pb-6">
+          <div className="flex flex-col items-center gap-3 bg-[#f8f9ff] rounded-lg p-6 border border-[#e0e7ff]">
+            <p className="text-sm font-medium text-[#111827]">
+              Pay this invoice securely online
+            </p>
+            <StripeButton paymentLink={data.stripePaymentLink} />
+            <p className="text-xs text-[#9ca3af]">
+              Powered by Stripe &bull; Secure payment processing
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Notes */}
       {data.notes && (
         <div className="px-8 pb-6">
@@ -255,10 +246,10 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
         </div>
       )}
 
-      {/* Footer */}
+      {/* Footer with ABN */}
       <div className="px-8 py-4 border-t border-[#e5e7eb] bg-[#f9fafb]">
         <p className="text-xs text-center text-[#9ca3af]">
-          Thank you for your business &bull; {data.fromName || "Wise AI"}
+          Thank you for your business &bull; {data.fromName || "Wise AI"} &bull; ABN: 74 653 249 265
         </p>
       </div>
     </div>

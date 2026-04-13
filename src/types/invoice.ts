@@ -21,4 +21,5 @@ export interface InvoiceData {
   notes: string;
   taxRate: number;
   currency: string;
+  stripePaymentLink: string;
 }

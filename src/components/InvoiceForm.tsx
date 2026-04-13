@@ -319,10 +319,10 @@ export function InvoiceForm({ data, onChange }: InvoiceFormProps) {
         </div>
       </section>
 
-      {/* Tax & Notes */}
+      {/* Payment & Tax */}
       <section className="bg-[#111227] border border-[#1e2044] rounded-xl p-6">
         <h2 className="text-base font-semibold text-white mb-4">
-          Additional Details
+          Payment & Details
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <InputField
@@ -332,7 +332,26 @@ export function InvoiceForm({ data, onChange }: InvoiceFormProps) {
             type="number"
             placeholder="0"
           />
-          <div /> {/* spacer */}
+          <InputField
+            label="Stripe Payment Link"
+            value={data.stripePaymentLink}
+            onChange={(v) => update("stripePaymentLink", v)}
+            placeholder="https://buy.stripe.com/..."
+          />
+          <div className="sm:col-span-2">
+            <p className="text-xs text-[#6b7280] mt--1">
+              Create a payment link in your{" "}
+              <a
+                href="https://dashboard.stripe.com/payment-links"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3b82f6] hover:text-[#2563eb] underline"
+              >
+                Stripe Dashboard
+              </a>{" "}
+              and paste it above. A &quot;Pay Now&quot; button will appear on the invoice.
+            </p>
+          </div>
           <div className="sm:col-span-2">
             <TextArea
               label="Notes / Payment Instructions"

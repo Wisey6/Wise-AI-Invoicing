@@ -35,6 +35,7 @@ const defaultInvoice: InvoiceData = {
   notes: "Payment due within 30 days of invoice date.\nThank you for choosing Wise AI.",
   taxRate: 0,
   currency: "USD",
+  stripePaymentLink: "",
 };
 
 type ViewMode = "split" | "form" | "preview";
